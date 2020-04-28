@@ -319,6 +319,9 @@
     <ClCompile Include="Features\FovChanger.cpp">
       <Filter>SourceAutoRecord\Features</Filter>
     </ClCompile>
+    <ClCompile Include="Features\Hud\TractorBeamHud.cpp">
+      <Filter>SourceAutoRecord\Features\Hud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\minhook\buffer.h">
@@ -665,6 +668,9 @@
     </ClInclude>
     <ClInclude Include="Features\FovChanger.hpp">
       <Filter>SourceAutoRecord\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\Hud\TractorBeamHud.hpp">
+      <Filter>SourceAutoRecord\Features\Hud</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
