@@ -42,7 +42,8 @@ void TractorBeamHud::Paint(int slot)
     using _IsAsleep = bool(__thiscall*)(void* thisptr);
     using _IsCollisionEnabled = bool(__thiscall*)(void* thisptr);
     using _GetPosition = void(__thiscall*)(void* thisptr, Vector* worldPosition, QAngle* angles);
-    
+    using _GetContactPoint = bool(__thiscall*)(void* thisptr, Vector* contactPoint, void** contactObject);
+
     _IsAsleep IsAsleep = Memory::VMT<_IsAsleep>(m_pShadowStand, 0x2);
     _IsCollisionEnabled IsCollisionEnabled = Memory::VMT<_IsCollisionEnabled>(m_pShadowStand, 6);
     _GetPosition GetPosition = Memory::VMT<_GetPosition>(m_pShadowStand, 48);
