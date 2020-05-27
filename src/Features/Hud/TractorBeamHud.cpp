@@ -12,6 +12,8 @@
 TractorBeamHud speedrunHud;
 
 Variable sar_tbeam_hud("sar_tbeam_hud", "0", 0, "Agony.\n");
+Variable sar_tbeam_hud_x("sar_tbeam_hud_x", "0", 0, "AAAAA.\n");
+Variable sar_tbeam_hud_y("sar_tbeam_hud_y", "0", 0, "Fuck you bets.\n");
 
 TractorBeamHud::TractorBeamHud()
     : Hud(HudType_InGame, false, SourceGame_SupportsS3)
@@ -32,8 +34,11 @@ void TractorBeamHud::Paint(int slot)
 
     void* m_hTractorBeam = *reinterpret_cast<void**>((uintptr_t)pplocaldata + 392);
 
-    surface->DrawTxt(font, 5, 10, this->GetColor("255 255 255 255"), "m_hTractorBeam: %#08X", m_hTractorBeam);
-    surface->DrawTxt(font, 5, 30, this->GetColor("255 255 255 255"), "m_nTractorBeamCount: %X", m_nTractorBeamCount);
+    int cX = sar_tbeam_hud_x.GetInt();
+    int cY = sar_tbeam_hud_y.GetInt();
+
+    surface->DrawTxt(font, cX+5, cY+10, this->GetColor("255 255 255 255"), "m_hTractorBeam: %#08X", m_hTractorBeam);
+    surface->DrawTxt(font, cX+5, cY+30, this->GetColor("255 255 255 255"), "m_nTractorBeamCount: %X", m_nTractorBeamCount);
 
 
     void* m_pShadowStand = *reinterpret_cast<void**>((uintptr_t)player + 3160);
@@ -66,13 +71,13 @@ void TractorBeamHud::Paint(int slot)
             disableColor._color[3] = 128;
         }
 
-        surface->DrawTxt(font, 5, y, posColor, "%s (%#08X): ", name, shadow);
-        surface->DrawTxt(font, 15, y + 20, posColor, "pos: (%.03f, %.03f, %.03f)", v.x, v.y, v.z);
-        surface->DrawTxt(font, 15, y + 40, posColor, "ang: (%.03f, %.03f, %.03f)", q.x, q.y, q.z);
+        surface->DrawTxt(font, cX + 5, cY + y, posColor, "%s (%#08X): ", name, shadow);
+        surface->DrawTxt(font, cX + 15, cY + y + 20, posColor, "pos: (%.03f, %.03f, %.03f)", v.x, v.y, v.z);
+        surface->DrawTxt(font, cX + 15, cY + y + 40, posColor, "ang: (%.03f, %.03f, %.03f)", q.x, q.y, q.z);
         
-        surface->DrawTxt(font, 15, y + 60, collisionEnabled ? enableColor : disableColor, "IsCollisionEnabled(): %s", collisionEnabled ? "true" : "false");
+        surface->DrawTxt(font, cX + 15, cY + y + 60, collisionEnabled ? enableColor : disableColor, "IsCollisionEnabled(): %s", collisionEnabled ? "true" : "false");
         
-        surface->DrawTxt(font, 15, y + 80, asleep ? enableColor : disableColor, "IsAsleep(): %s", asleep ? "true" : "false");
+        surface->DrawTxt(font, cX + 15, cY + y + 80, asleep ? enableColor : disableColor, "IsAsleep(): %s", asleep ? "true" : "false");
     };
 
     drawPhysicsInfo(70, m_pShadowStand, "m_pShadowStand");

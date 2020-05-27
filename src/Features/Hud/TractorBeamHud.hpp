@@ -14,3 +14,5 @@ public:
 extern TractorBeamHud tractorBeamHud;
 
 extern Variable sar_tbeam_hud;
+extern Variable sar_tbeam_hud_x;
+extern Variable sar_tbeam_hud_y;
