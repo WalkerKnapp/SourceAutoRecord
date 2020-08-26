@@ -12,6 +12,7 @@ public:
     unsigned currentFrame;
     unsigned lastFrame;
     int prevState;
+    int signonState;
 
 public:
     Session();

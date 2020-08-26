@@ -9,7 +9,7 @@
 
 #include "Variable.hpp"
 
-TractorBeamHud speedrunHud;
+TractorBeamHud tractorBeamHud;
 
 Variable sar_tbeam_hud("sar_tbeam_hud", "0", 0, "Agony.\n");
 Variable sar_tbeam_hud_x("sar_tbeam_hud_x", "0", 0, "AAAAA.\n");
