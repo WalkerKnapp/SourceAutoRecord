@@ -2,6 +2,7 @@
 #include "Hud.hpp"
 
 #include "Variable.hpp"
+#include "Command.hpp"
 
 class TractorBeamHud : public Hud {
 public:
@@ -13,6 +14,10 @@ public:
 
 extern TractorBeamHud tractorBeamHud;
 
-extern Variable sar_tbeam_hud;
-extern Variable sar_tbeam_hud_x;
-extern Variable sar_tbeam_hud_y;
+extern Variable sar_vphys_hud;
+extern Variable sar_vphys_hud_x;
+extern Variable sar_vphys_hud_y;
+
+extern Command sar_vphys_setgravity;
+extern Command sar_vphys_setangle;
+extern Command sar_vphys_setspin;
