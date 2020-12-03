@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
@@ -133,13 +133,14 @@
     <ClCompile Include="Features\Hud\InputHud.cpp" />
     <ClCompile Include="Features\Hud\InspectionHud.cpp" />
     <ClCompile Include="Features\Hud\SpeedrunHud.cpp" />
-    <ClCompile Include="Features\Hud\TractorBeamHud.cpp" />
+    <ClCompile Include="Features\Hud\VphysHud.cpp" />
     <ClCompile Include="Features\Imitator.cpp" />
     <ClCompile Include="Features\InfraSession.cpp" />
     <ClCompile Include="Features\Listener.cpp" />
     <ClCompile Include="Features\OffsetFinder.cpp" />
     <ClCompile Include="Features\Rebinder.cpp" />
     <ClCompile Include="Features\Routing\EntityInspector.cpp" />
+    <ClCompile Include="Features\Routing\SeamshotFind.cpp" />
     <ClCompile Include="Features\Routing\Tracer.cpp" />
     <ClCompile Include="Features\Session.cpp" />
     <ClCompile Include="Features\Speedrun\Rules\ApertureTagRules.cpp" />
@@ -275,13 +276,14 @@
     <ClInclude Include="Features\Hud\InputHud.hpp" />
     <ClInclude Include="Features\Hud\InspectionHud.hpp" />
     <ClInclude Include="Features\Hud\SpeedrunHud.hpp" />
-    <ClInclude Include="Features\Hud\TractorBeamHud.hpp" />
+    <ClInclude Include="Features\Hud\VphysHud.hpp" />
     <ClInclude Include="Features\Imitator.hpp" />
     <ClInclude Include="Features\InfraSession.hpp" />
     <ClInclude Include="Features\Listener.hpp" />
     <ClInclude Include="Features\OffsetFinder.hpp" />
     <ClInclude Include="Features\Rebinder.hpp" />
     <ClInclude Include="Features\Routing\EntityInspector.hpp" />
+    <ClInclude Include="Features\Routing\SeamshotFind.hpp" />
     <ClInclude Include="Features\Routing\Tracer.hpp" />
     <ClInclude Include="Features\Session.hpp" />
     <ClInclude Include="Features\Speedrun\Rules\ApertureTagRules.hpp" />

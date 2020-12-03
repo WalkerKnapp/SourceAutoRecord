@@ -70,6 +70,7 @@ void Portal2::LoadOffsets()
     Frame = 5; // CEngine
     m_bLoadGame = 448; // CGameClient::ActivatePlayer/CBaseServer::m_szLevelName
     ScreenPosition = 12; // CIVDebugOverlay
+    AddLineOverlay = 4; // CIVDebugOverlay
     MAX_SPLITSCREEN_PLAYERS = 2; // maxplayers
     OnGameOverlayActivated = 144; // CSteam3Client
 
@@ -116,6 +117,7 @@ void Portal2::LoadOffsets()
     GetIServerEntity = 1; // CServerTools
     m_EntPtrArray = 61; // CServerTools::GetIServerEntity
     ClientCommand = 39; // CVEngineServer
+    TraceRay = 5; // IEngineTrace
     IsPlayer = 85; // CBasePlayer
     m_pSurfaceData = 3868; // CGameMovement::CheckJumpButton
     jumpFactor = 68; // CGameMovement::CheckJumpButton

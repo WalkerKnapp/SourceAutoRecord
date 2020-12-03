@@ -1,4 +1,4 @@
-#include "TractorBeamHud.hpp"
+#include "VphysHud.hpp"
 
 #include "Features/Speedrun/SpeedrunTimer.hpp"
 
@@ -11,21 +11,21 @@
 #include "Variable.hpp"
 #include "Command.hpp"
 
-TractorBeamHud tractorBeamHud;
+VphysHud vphysHud;
 
 Variable sar_vphys_hud("sar_vphys_hud", "0", 0, "Agony.\n");
 Variable sar_vphys_hud_x("sar_vphys_hud_x", "0", 0, "AAAAA.\n");
 Variable sar_vphys_hud_y("sar_vphys_hud_y", "0", 0, "Fuck you bets.\n");
 
-TractorBeamHud::TractorBeamHud()
+VphysHud::VphysHud()
     : Hud(HudType_InGame, false, SourceGame_SupportsS3)
 {
 }
-bool TractorBeamHud::ShouldDraw()
+bool VphysHud::ShouldDraw()
 {
     return sar_vphys_hud.GetBool() && Hud::ShouldDraw();
 }
-void TractorBeamHud::Paint(int slot)
+void VphysHud::Paint(int slot)
 {
     auto font = scheme->GetDefaultFont() + 1;
 
@@ -99,7 +99,7 @@ void TractorBeamHud::Paint(int slot)
     drawPhysicsInfo(70, m_pShadowStand, "m_pShadowStand");
     drawPhysicsInfo(260, m_pShadowCrouch, "m_pShadowCrouch");
 }
-bool TractorBeamHud::GetCurrentSize(int& xSize, int& ySize)
+bool VphysHud::GetCurrentSize(int& xSize, int& ySize)
 {
     return false;
 }

@@ -34,15 +34,18 @@ public:
     using _AddText = void(__rescall*)(void* thisptr, const char* pText, int nTickDelay);
     using _ClientCommand = int (*)(void* thisptr, void* pEdict, const char* szFmt, ...);
     using _GetLocalClient = int (*)(int index);
+    using _TraceRay = void(*)(void* thisptr, const Ray_t& ray, unsigned int fMask, ITraceFilter* pTraceFilter, CGameTrace* pTrace);
 #ifdef _WIN32
     using _GetScreenSize = int(__stdcall*)(int& width, int& height);
     using _GetActiveSplitScreenPlayerSlot = int (*)();
     using _ScreenPosition = int(__stdcall*)(const Vector& point, Vector& screen);
+    using _AddLineOverlay = void(_stdcall*)(const Vector& origin, const Vector& dest, int r, int g, int b, bool noDepthTest, float duration);
     using _ConPrintEvent = int(__stdcall*)(IGameEvent* ev);
 #else
     using _GetScreenSize = int(__cdecl*)(void* thisptr, int& width, int& height);
     using _GetActiveSplitScreenPlayerSlot = int (*)(void* thisptr);
     using _ScreenPosition = int(__stdcall*)(void* thisptr, const Vector& point, Vector& screen);
+    using _AddLineOverlay = void(_stdcall*)(void* thisptr, const Vector& origin, const Vector& dest, int r, int g, int b, bool noDepthTest, float duration);
     using _ConPrintEvent = int(__cdecl*)(void* thisptr, IGameEvent* ev);
 #endif
 
@@ -59,9 +62,11 @@ public:
     _Cbuf_AddText Cbuf_AddText = nullptr;
     _AddText AddText = nullptr;
     _ScreenPosition ScreenPosition = nullptr;
+    _AddLineOverlay AddLineOverlay = nullptr;
     _ConPrintEvent ConPrintEvent = nullptr;
     _ClientCommand ClientCommand = nullptr;
     _GetLocalClient GetLocalClient = nullptr;
+    _TraceRay TraceRay = nullptr;
 
     EngineDemoPlayer* demoplayer = nullptr;
     EngineDemoRecorder* demorecorder = nullptr;

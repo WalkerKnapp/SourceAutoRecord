@@ -4,15 +4,15 @@
 #include "Variable.hpp"
 #include "Command.hpp"
 
-class TractorBeamHud : public Hud {
+class VphysHud : public Hud {
 public:
-    TractorBeamHud();
+    VphysHud();
     bool ShouldDraw() override;
     void Paint(int slot) override;
     bool GetCurrentSize(int& xSize, int& ySize) override;
 };
 
-extern TractorBeamHud tractorBeamHud;
+extern VphysHud vphysHud;
 
 extern Variable sar_vphys_hud;
 extern Variable sar_vphys_hud_x;

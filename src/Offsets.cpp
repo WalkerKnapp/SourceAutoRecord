@@ -121,6 +121,9 @@ int iNumPortalsPlaced;
 // IEngineVGuiInternal
 int Paint;
 
+// IEngineTrace
+int TraceRay;
+
 // CEngineTool
 int GetCurrentMap;
 
@@ -157,6 +160,7 @@ int IsRunningSimulation;
 
 // CIVDebugOverlay
 int ScreenPosition;
+int AddLineOverlay;
 
 // CCommandBuffer
 int m_bWaitEnabled;

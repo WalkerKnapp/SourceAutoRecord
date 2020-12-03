@@ -354,6 +354,11 @@ bool Engine::Init()
             auto HostState_OnClientConnected = Memory::Read(SetSignonState + Offsets::HostState_OnClientConnected);
             Memory::Deref<CHostState*>(HostState_OnClientConnected + Offsets::hoststate, &hoststate);
         }
+
+        if (auto engineTrace = Interface::Create(this->Name(), "EngineTraceServer004"))
+        {
+            this->TraceRay = engineTrace->Original<_TraceRay>(Offsets::TraceRay);
+        }
     }
 
     if (auto tool = Interface::Create(this->Name(), "VENGINETOOL0", false)) {
@@ -417,6 +422,7 @@ bool Engine::Init()
 
     if (auto debugoverlay = Interface::Create(this->Name(), "VDebugOverlay0", false)) {
         ScreenPosition = debugoverlay->Original<_ScreenPosition>(Offsets::ScreenPosition);
+        AddLineOverlay = debugoverlay->Original<_AddLineOverlay>(Offsets::AddLineOverlay);
         Interface::Delete(debugoverlay);
     }
 
