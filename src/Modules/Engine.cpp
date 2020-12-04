@@ -355,9 +355,9 @@ bool Engine::Init()
             Memory::Deref<CHostState*>(HostState_OnClientConnected + Offsets::hoststate, &hoststate);
         }
 
-        if (auto engineTrace = Interface::Create(this->Name(), "EngineTraceServer004"))
+        if (this->engineTrace = Interface::Create(this->Name(), "EngineTraceServer004"))
         {
-            this->TraceRay = engineTrace->Original<_TraceRay>(Offsets::TraceRay);
+            this->TraceRay = this->engineTrace->Original<_TraceRay>(Offsets::TraceRay);
         }
     }
 
@@ -421,8 +421,8 @@ bool Engine::Init()
 #endif
 
     if (auto debugoverlay = Interface::Create(this->Name(), "VDebugOverlay0", false)) {
-        ScreenPosition = debugoverlay->Original<_ScreenPosition>(Offsets::ScreenPosition);
-        AddLineOverlay = debugoverlay->Original<_AddLineOverlay>(Offsets::AddLineOverlay);
+        this->ScreenPosition = debugoverlay->Original<_ScreenPosition>(Offsets::ScreenPosition);
+        this->AddLineOverlay = debugoverlay->Original<_AddLineOverlay>(Offsets::AddLineOverlay);
         Interface::Delete(debugoverlay);
     }
 
@@ -439,7 +439,7 @@ bool Engine::Init()
     host_framerate = Variable("host_framerate");
     net_showmsg = Variable("net_showmsg");
 
-    return this->hasLoaded = this->engineClient && this->s_ServerPlugin && this->demoplayer && this->demorecorder;
+    return this->hasLoaded = this->engineClient && this->s_ServerPlugin && this->demoplayer && this->demorecorder && this->engineTrace;
 }
 void Engine::Shutdown()
 {
@@ -454,6 +454,7 @@ void Engine::Shutdown()
     Interface::Delete(this->cl);
     Interface::Delete(this->eng);
     Interface::Delete(this->s_GameEventManager);
+    Interface::Delete(this->engineTrace);
 
 #ifdef _WIN32
     Command::Unhook("connect", Engine::connect_callback);

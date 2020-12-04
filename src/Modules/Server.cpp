@@ -14,6 +14,7 @@
 #include "Features/Tas/TasTools.hpp"
 #include "Features/Timer/PauseTimer.hpp"
 #include "Features/Timer/Timer.hpp"
+#include "Features/Routing/SeamshotFind.hpp"
 
 #include "Engine.hpp"
 
@@ -333,8 +334,12 @@ DETOUR(Server::GameFrame, bool simulating)
         speedrun->CheckRules(engine->GetTick());
     }
 
+    if (simulating) {
+        seamshotFind->DrawLines();
+    }
+
 #ifndef _WIN32
-    return result;
+        return result;
 #endif
 }
 

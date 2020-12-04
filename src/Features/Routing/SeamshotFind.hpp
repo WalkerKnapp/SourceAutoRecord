@@ -9,9 +9,9 @@
 class SeamshotFind : public Feature {
 public:
     SeamshotFind();
+    void DrawLines();
 };
 
 extern SeamshotFind* seamshotFind;
 
 extern Variable sar_seamshot_finder;
-extern Command sar_seamshot_test;

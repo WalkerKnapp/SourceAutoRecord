@@ -33,12 +33,23 @@ struct Vector {
         res.z = z * fl;
         return res;
     }
+    inline Vector operator/(float fl) {
+        return *this * (1 / fl);
+    }
     inline Vector operator+(Vector vec)
     {
         Vector res;
         res.x = x + vec.x;
         res.y = y + vec.y;
         res.z = z + vec.z;
+        return res;
+    }
+    inline Vector operator-(Vector vec)
+    {
+        Vector res;
+        res.x = x - vec.x;
+        res.y = y - vec.y;
+        res.z = z - vec.z;
         return res;
     }
     inline float& operator[](int i)
@@ -52,6 +63,17 @@ struct Vector {
     static inline float DotProduct(const Vector& a, const Vector& b) 
     {
         return a.x*b.x + a.y*b.y + a.z*b.z; 
+    }
+    inline Vector Cross(const Vector& v)
+    {
+        Vector out;
+        out.x = this->y * v.z - this->z * v.y;
+        out.y = this->z * v.x - this->x * v.z;
+        out.z = this->x * v.y - this->y * v.x;
+        return out;
+    }
+    inline Vector Normalize() {
+        return *this / this->Length();
     }
 };
 
@@ -924,9 +946,9 @@ enum PaintMode_t {
 
 #pragma region RayTracing
 
-#define CONTENTS_EMPTY
-#define CONTENTS_SOLID
-#define CONTENTS_WINDOW
+#define CONTENTS_EMPTY 0x0
+#define CONTENTS_SOLID 0x1
+#define CONTENTS_WINDOW 0x2
 #define CONTENTS_AUX 0x4
 #define CONTENTS_GRATE 0x8
 #define CONTENTS_SLIME 0x10
@@ -1032,15 +1054,13 @@ struct CGameTrace : public CBaseTrace {
     int hitbox;
 };
 
-struct __declspec(align(16)) VectorAligned : public Vector {
+struct VectorAligned : public Vector {
     VectorAligned()
         : Vector()
         , w(0){};
     VectorAligned(float x, float y, float z)
         : Vector(x, y, z)
-        , w(0)
-    {
-    }
+        , w(0) {}
     float w;
 };
 
