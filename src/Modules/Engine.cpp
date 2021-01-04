@@ -25,6 +25,7 @@ REDECL(Engine::Disconnect2);
 REDECL(Engine::SetSignonState);
 REDECL(Engine::SetSignonState2);
 REDECL(Engine::Frame);
+REDECL(Engine::PurgeUnusedModels);
 REDECL(Engine::OnGameOverlayActivated);
 REDECL(Engine::OnGameOverlayActivatedBase);
 REDECL(Engine::plugin_load_callback);
@@ -182,6 +183,15 @@ DETOUR(Engine::Frame)
     return Engine::Frame(thisptr);
 }
 
+DETOUR(Engine::PurgeUnusedModels)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    auto result = Engine::PurgeUnusedModels(thisptr);
+    auto stop = std::chrono::high_resolution_clock::now();
+    console->DevMsg("PurgeUnusedModels - %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count());
+    return result;
+}
+
 #ifdef _WIN32
 // CDemoFile::ReadCustomData
 void __fastcall ReadCustomData_Wrapper(int demoFile, int edx, int unk1, int unk2)
@@ -204,7 +214,7 @@ DETOUR_MID_MH(Engine::ParseSmoothingInfo_Mid)
 
         jmp Engine::ParseSmoothingInfo_Skip
 
-_orig:  // Original overwritten instructions
+_orig: // Original overwritten instructions
         add eax, -3
         cmp eax, 6
         ja _def
@@ -355,8 +365,7 @@ bool Engine::Init()
             Memory::Deref<CHostState*>(HostState_OnClientConnected + Offsets::hoststate, &hoststate);
         }
 
-        if (this->engineTrace = Interface::Create(this->Name(), "EngineTraceServer004"))
-        {
+        if (this->engineTrace = Interface::Create(this->Name(), "EngineTraceServer004")) {
             this->TraceRay = this->engineTrace->Original<_TraceRay>(Offsets::TraceRay);
         }
     }
@@ -364,6 +373,16 @@ bool Engine::Init()
     if (auto tool = Interface::Create(this->Name(), "VENGINETOOL0", false)) {
         auto GetCurrentMap = tool->Original(Offsets::GetCurrentMap);
         this->m_szLevelName = Memory::Deref<char*>(GetCurrentMap + Offsets::m_szLevelName);
+
+        if (sar.game->Is(SourceGame_Portal2Engine)) {
+            uintptr_t ChangeToMap = tool->Original(Offsets::GetCurrentMap + 1);
+            void* modelloader_Addr = Memory::DerefDeref(ChangeToMap + 5);
+            if (this->modelloader = Interface::Create(modelloader_Addr)) {
+                this->GetCount = this->modelloader->Original<_GetCount>(2);
+
+                this->modelloader->Hook(Engine::PurgeUnusedModels_Hook, Engine::PurgeUnusedModels, 12);
+            }
+        }
 
         if (sar.game->Is(SourceGame_HalfLife2Engine) && std::strlen(this->m_szLevelName) != 0) {
             console->Warning("SAR: DO NOT load this plugin when the server is active!\n");
@@ -407,15 +426,15 @@ bool Engine::Init()
         console->DevMsg("CDemoFile::ReadCustomData = %p\n", readCustomDataAddr);
 
         if (parseSmoothingInfoAddr && readCustomDataAddr) {
-            MH_HOOK_MID(Engine::ParseSmoothingInfo_Mid, parseSmoothingInfoAddr);            // Hook switch-case
-            Engine::ParseSmoothingInfo_Continue = parseSmoothingInfoAddr + 8;               // Back to original function
-            Engine::ParseSmoothingInfo_Default = parseSmoothingInfoAddr + 133;              // Default case
-            Engine::ParseSmoothingInfo_Skip = parseSmoothingInfoAddr - 29;                  // Continue loop
+            MH_HOOK_MID(Engine::ParseSmoothingInfo_Mid, parseSmoothingInfoAddr); // Hook switch-case
+            Engine::ParseSmoothingInfo_Continue = parseSmoothingInfoAddr + 8; // Back to original function
+            Engine::ParseSmoothingInfo_Default = parseSmoothingInfoAddr + 133; // Default case
+            Engine::ParseSmoothingInfo_Skip = parseSmoothingInfoAddr - 29; // Continue loop
             Engine::ReadCustomData = reinterpret_cast<_ReadCustomData>(readCustomDataAddr); // Function that handles dem_customdata
 
             this->demoSmootherPatch = new Memory::Patch();
             unsigned char nop3[] = { 0x90, 0x90, 0x90 };
-            this->demoSmootherPatch->Execute(parseSmoothingInfoAddr + 5, nop3);             // Nop rest
+            this->demoSmootherPatch->Execute(parseSmoothingInfoAddr + 5, nop3); // Nop rest
         }
     }
 #endif
@@ -455,6 +474,7 @@ void Engine::Shutdown()
     Interface::Delete(this->eng);
     Interface::Delete(this->s_GameEventManager);
     Interface::Delete(this->engineTrace);
+    Interface::Delete(this->modelloader);
 
 #ifdef _WIN32
     Command::Unhook("connect", Engine::connect_callback);

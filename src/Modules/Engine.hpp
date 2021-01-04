@@ -22,6 +22,7 @@ public:
     Interface* debugoverlay = nullptr;
     Interface* s_ServerPlugin = nullptr;
     Interface* engineTrace = nullptr;
+    Interface* modelloader = nullptr;
 
     using _ClientCmd = int(__rescall*)(void* thisptr, const char* szCmdString);
     using _GetLocalPlayer = int(__rescall*)(void* thisptr);
@@ -49,6 +50,8 @@ public:
     using _AddLineOverlay = void(_stdcall*)(void* thisptr, const Vector& origin, const Vector& dest, int r, int g, int b, bool noDepthTest, float duration);
     using _ConPrintEvent = int(__cdecl*)(void* thisptr, IGameEvent* ev);
 #endif
+    using _GetCount = int(__rescall*)(void* thisptr);
+    using _UnreferenceAllModels = void(__stdcall*)(int referencetype);
 
     _GetScreenSize GetScreenSize = nullptr;
     _ClientCmd ClientCmd = nullptr;
@@ -68,6 +71,8 @@ public:
     _ClientCommand ClientCommand = nullptr;
     _GetLocalClient GetLocalClient = nullptr;
     _TraceRay TraceRay = nullptr;
+    _GetCount GetCount = nullptr;
+    _UnreferenceAllModels UnreferenceAllModels = nullptr;
 
     EngineDemoPlayer* demoplayer = nullptr;
     EngineDemoRecorder* demorecorder = nullptr;
@@ -111,6 +116,9 @@ public:
 
     // CEngine::Frame
     DECL_DETOUR(Frame);
+
+    // CModelLoader
+    DECL_DETOUR(PurgeUnusedModels);
 
     // CSteam3Client::OnGameOverlayActivated
     DECL_DETOUR_B(OnGameOverlayActivated, GameOverlayActivated_t* pGameOverlayActivated);

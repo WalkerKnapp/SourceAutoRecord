@@ -37,6 +37,8 @@ Variable sar_duckjump("sar_duckjump", "0", "Allows duck-jumping even when fully 
 Variable sar_disable_challenge_stats_hud("sar_disable_challenge_stats_hud", "0", "Disables opening the challenge mode stats HUD.\n");
 Variable sar_disable_steam_pause("sar_disable_steam_pause", "0", "Prevents pauses from steam overlay.\n");
 Variable sar_disable_no_focus_sleep("sar_disable_no_focus_sleep", "0", "Does not yield the CPU when game is not focused.\n");
+Variable sar_disable_update_progress_bar("sar_disable_update_progress_bar", "0", "Disables excessive usage of progress bar.\n");
+Variable sar_janky_loading_hack("sar_janky_loading_hack", "0", "Enables hack that shortens loading time (may break the game!!!)");
 
 Variable sv_laser_cube_autoaim;
 Variable ui_loadingscreen_transition_time;
@@ -124,6 +126,8 @@ void Cheats::Init()
     //sar_hud_portals.UniqueFor(SourceGame_Portal2Game | SourceGame_Portal);
     sar_disable_challenge_stats_hud.UniqueFor(SourceGame_Portal2);
     sar_disable_steam_pause.UniqueFor(SourceGame_Portal2Game);
+    sar_disable_update_progress_bar.UniqueFor(SourceGame_Portal2);
+    sar_janky_loading_hack.UniqueFor(SourceGame_Portal2);
     sar_debug_listener.UniqueFor(SourceGame_Portal2 | SourceGame_ApertureTag);
     sar_sr_hud.UniqueFor(s3);
     sar_sr_hud_x.UniqueFor(s3);
