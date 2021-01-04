@@ -9,15 +9,35 @@
 #include "Utils.hpp"
 
 REDECL(MaterialSystem::UncacheUnusedMaterials);
+REDECL(MaterialSystem::CreateMaterial);
 
 DETOUR(MaterialSystem::UncacheUnusedMaterials, bool bRecomputeStateSnapshots) {
     auto start = std::chrono::high_resolution_clock::now();
-    bool bRecomputeStateSnapshotFixed = sar_janky_loading_hack.GetBool() ? false : bRecomputeStateSnapshots;
+    bool bRecomputeStateSnapshotFixed = sar_prevent_mat_snapshot_recompute.GetBool() ? false : bRecomputeStateSnapshots;
     auto result = MaterialSystem::UncacheUnusedMaterials(thisptr, bRecomputeStateSnapshotFixed);
     auto stop = std::chrono::high_resolution_clock::now();
     console->DevMsg("UncacheUnusedMaterials - %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count());
     return result;
 }
+
+DETOUR(MaterialSystem::CreateMaterial, const char* pMaterialName, void* pVMTKeyValues)
+{
+    std::string sMaterialName(pMaterialName);
+
+    // Memory leak ultimate fix! -route credits to krzyhau
+    // apparently the game loads PeTI related materials into the memory every time you
+    // load the game. This simply prevents that from happening.
+    bool isPetiMaterial = sMaterialName.find("props_map_editor") != std::string::npos;
+    bool isWhiteMaterial = sMaterialName.find("vgui/white") != std::string::npos;
+
+    if ((isPetiMaterial || isWhiteMaterial) && sar_prevent_peti_materials_loading.GetBool()) {
+        return 0;
+    }
+
+    //console->Print("CreateMaterial: %s\n", pMaterialName);
+    return MaterialSystem::CreateMaterial(thisptr, pMaterialName, pVMTKeyValues);
+}
+
 
 bool MaterialSystem::Init()
 {
@@ -25,6 +45,7 @@ bool MaterialSystem::Init()
     if (this->materials) {
         if (sar.game->Is(SourceGame_Portal2Engine)) {
             this->materials->Hook(MaterialSystem::UncacheUnusedMaterials_Hook, MaterialSystem::UncacheUnusedMaterials, 77);
+            this->materials->Hook(MaterialSystem::CreateMaterial_Hook, MaterialSystem::CreateMaterial, 81);
         }
     }
 

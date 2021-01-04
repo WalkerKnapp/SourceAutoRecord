@@ -73,7 +73,10 @@ DETOUR(VGui::UpdateProgressBar, int progress) {
         vgui->progressBarCount = 0;
     }
     vgui->progressBarCount++;
-    if (sar_disable_update_progress_bar.GetBool() && vgui->progressBarCount > 1) {
+    if (sar_disable_progress_bar_update.GetInt()==1 && vgui->progressBarCount > 1) {
+        return 0;
+    }
+    if (sar_disable_progress_bar_update.GetInt() == 2) {
         return 0;
     }
     return VGui::UpdateProgressBar(thisptr, progress);

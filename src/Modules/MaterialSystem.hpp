@@ -9,10 +9,9 @@
 class MaterialSystem : public Module {
 public:
     Interface* materials = nullptr;
-
-
 public:
     DECL_DETOUR(UncacheUnusedMaterials, bool bRecomputeStateSnapshots);
+    DECL_DETOUR(CreateMaterial, const char* pMaterialName, void* pVMTKeyValues);
 
     bool Init() override;
     void Shutdown() override;
