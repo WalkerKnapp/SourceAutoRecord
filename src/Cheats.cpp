@@ -39,7 +39,7 @@ Variable sar_disable_steam_pause("sar_disable_steam_pause", "0", "Prevents pause
 Variable sar_disable_no_focus_sleep("sar_disable_no_focus_sleep", "0", "Does not yield the CPU when game is not focused.\n");
 Variable sar_disable_progress_bar_update("sar_disable_progress_bar_update", "0", 0, 2, "Disables excessive usage of progress bar.\n");
 Variable sar_prevent_mat_snapshot_recompute("sar_prevent_mat_snapshot_recompute", "0", "Enables hack that shortens loading time (may break something, idk)");
-Variable sar_prevent_peti_materials_loading("sar_prevent_peti_materials_loading", "0", "Fixed memory leak by blocking PeTI from ever loading its materials. PeTI won't work properly with it enabled!");
+Variable sar_prevent_peti_materials_loading("sar_prevent_peti_materials_loading", "1", "Fixed memory leak by blocking PeTI from loading its materials outside of map editor.");
 
 Variable sv_laser_cube_autoaim;
 Variable ui_loadingscreen_transition_time;

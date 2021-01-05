@@ -374,16 +374,6 @@ bool Engine::Init()
         auto GetCurrentMap = tool->Original(Offsets::GetCurrentMap);
         this->m_szLevelName = Memory::Deref<char*>(GetCurrentMap + Offsets::m_szLevelName);
 
-        if (sar.game->Is(SourceGame_Portal2Engine)) {
-            uintptr_t ChangeToMap = tool->Original(Offsets::GetCurrentMap + 1);
-            void* modelloader_Addr = Memory::DerefDeref(ChangeToMap + 5);
-            if (this->modelloader = Interface::Create(modelloader_Addr)) {
-                this->GetCount = this->modelloader->Original<_GetCount>(2);
-
-                this->modelloader->Hook(Engine::PurgeUnusedModels_Hook, Engine::PurgeUnusedModels, 12);
-            }
-        }
-
         if (sar.game->Is(SourceGame_HalfLife2Engine) && std::strlen(this->m_szLevelName) != 0) {
             console->Warning("SAR: DO NOT load this plugin when the server is active!\n");
             return false;
@@ -474,7 +464,6 @@ void Engine::Shutdown()
     Interface::Delete(this->eng);
     Interface::Delete(this->s_GameEventManager);
     Interface::Delete(this->engineTrace);
-    Interface::Delete(this->modelloader);
 
 #ifdef _WIN32
     Command::Unhook("connect", Engine::connect_callback);

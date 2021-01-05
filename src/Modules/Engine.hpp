@@ -22,7 +22,6 @@ public:
     Interface* debugoverlay = nullptr;
     Interface* s_ServerPlugin = nullptr;
     Interface* engineTrace = nullptr;
-    Interface* modelloader = nullptr;
 
     using _ClientCmd = int(__rescall*)(void* thisptr, const char* szCmdString);
     using _GetLocalPlayer = int(__rescall*)(void* thisptr);
