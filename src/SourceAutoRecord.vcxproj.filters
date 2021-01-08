@@ -235,6 +235,9 @@
     <ClCompile Include="Features\OffsetFinder.cpp">
       <Filter>SourceAutoRecord\Features</Filter>
     </ClCompile>
+		<ClCompile Include="Features\PortalEnvPreserve.cpp">
+      <Filter>SourceAutoRecord\Features</Filter>
+    </ClCompile>
     <ClCompile Include="Features\ReplaySystem\Replay.cpp">
       <Filter>SourceAutoRecord\Features\ReplaySystem</Filter>
     </ClCompile>
@@ -586,6 +589,9 @@
       <Filter>SourceAutoRecord\Features</Filter>
     </ClInclude>
     <ClInclude Include="Features\OffsetFinder.hpp">
+      <Filter>SourceAutoRecord\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\PortalEnvPreserve.hpp">
       <Filter>SourceAutoRecord\Features</Filter>
     </ClInclude>
     <ClInclude Include="Features\ReplaySystem\ReplayView.hpp">
