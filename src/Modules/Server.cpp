@@ -7,6 +7,7 @@
 #include "Features/OffsetFinder.hpp"
 #include "Features/Routing/EntityInspector.hpp"
 #include "Features/Routing/SeamshotFind.hpp"
+#include "Features/PortalEnvPreserve.hpp"
 #include "Features/Session.hpp"
 #include "Features/Speedrun/SpeedrunTimer.hpp"
 #include "Features/Stats/Stats.hpp"
@@ -336,6 +337,7 @@ DETOUR(Server::GameFrame, bool simulating)
 
     if (simulating) {
         seamshotFind->DrawLines();
+				portalEnvPreserve->Update();
     }
 
 #ifndef _WIN32

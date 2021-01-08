@@ -85,6 +85,7 @@ bool SAR::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerF
                     this->features->AddFeature<Listener>(&listener);
                     this->features->AddFeature<WorkshopList>(&workshop);
                     this->features->AddFeature<Imitator>(&imitator);
+										this->features->AddFeature<PortalEnvPreserve>(&portalEnvPreserve);
                 }
 
                 if (listener) {

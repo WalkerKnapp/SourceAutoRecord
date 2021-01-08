@@ -138,6 +138,7 @@ void Portal2::LoadOffsets()
     m_Local = 5084; // CBasePlayer
     m_nTractorBeamCount = 396; // CPlayerLocalData
     m_hTractorBeam = 392; // CPlayerLocalData
+    m_hPortalEnvironment = 5068; // CPortal_Player
 
     // client.so
 

@@ -125,6 +125,7 @@ extern int m_hTractorBeam;
 // CPortal_Player
 extern int iNumPortalsPlaced;
 extern int m_StatsThisLevel;
+extern int m_hPortalEnvironment;
 
 // IEngineVGuiInternal
 extern int Paint;

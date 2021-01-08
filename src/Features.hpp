@@ -8,6 +8,7 @@
 #include "Features/InfraSession.hpp"
 #include "Features/Listener.hpp"
 #include "Features/OffsetFinder.hpp"
+#include "Features/PortalEnvPreserve.hpp"
 #include "Features/Rebinder.hpp"
 #include "Features/ReplaySystem/ReplayPlayer.hpp"
 #include "Features/ReplaySystem/ReplayProvider.hpp"
